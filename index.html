@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para ti &lt;3</title>
+
+  <style>
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      font-family:Arial, sans-serif;
+      color:white;
+      padding-top:120px;
+
+      background-image: url("minecraft.jpg"), url("gatitos.png");
+      background-size: cover, 320px;
+      background-position: center, bottom right;
+      background-repeat: no-repeat, no-repeat;
+      background-color:#000;
+
+      overflow:hidden; /* importante para que no salga scroll por los corazones */
+      position:relative;
+    }
+
+    .contenedor{
+      background: none;
+      padding: 0px;
+      border-radius: 18px;
+      text-align:center;
+      border: none;
+      width: 100%;
+      z-index: 2; /* por encima de los corazones */
+    }
+
+    img{
+      width:60%;
+      border-radius: 100px;
+      box-shadow: 0 0 100px rgba(255,105,180,0.45);
+    }
+
+    h1{
+      width: fit-content;
+      max-width: 90%;
+      margin: 18px auto 0;
+      text-align: center;
+      padding: 20px 40px;
+      background: rgba(0,0,0,0.25);
+      text-shadow: 0 0 8px black;
+      border-radius: 12px;
+      box-sizing: border-box;
+    }
+
+    /* ===== Corazones flotando ===== */
+    .heart {
+      position: fixed;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      user-select: none;
+      z-index: 1; /* detrás del contenido */
+      opacity: 0.9;
+      animation: floatUp linear forwards;
+      text-shadow: 0 0 10px rgba(255,105,180,0.45);
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translate(var(--x), 0) scale(var(--s)) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      100% { transform: translate(var(--x), -110vh) scale(calc(var(--s) + 0.6)) rotate(var(--r)); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="contenedor">
+    <img src="foto.jpg" alt="Foto" />
+    <h1>No estoy lejos… me quedé viviendo en tu corazón, en tus recuerdos y en cada momento donde fui feliz contigo.</h1>
+  </div>
+
+  <audio autoplay loop>
+    <source src="musica.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    // Genera corazones flotando
+    function crearCorazon() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+
+      // Puedes cambiar ❤ por 🐾 o 💗 o lo que quieras
+      const hearts = ["❤","💗","💖","💞"];
+      heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+      const x = Math.random() * 100; // posición horizontal en vw
+      const size = 12 + Math.random() * 22; // tamaño
+      const drift = (Math.random() * 40 - 20) + "vw"; // se mueve a izquierda/derecha
+      const rotate = (Math.random() * 120 - 60) + "deg"; // rotación
+      const duration = 3 + Math.random() * 3; // 3 a 6 segundos
+
+      heart.style.left = x + "vw";
+      heart.style.fontSize = size + "px";
+      heart.style.setProperty("--x", drift);
+      heart.style.setProperty("--s", (0.6 + Math.random() * 0.8).toFixed(2));
+      heart.style.setProperty("--r", rotate);
+      heart.style.animationDuration = duration + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), duration * 1000);
+    }
+
+    // Cantidad de corazones (ajusta si quieres más o menos)
+    setInterval(crearCorazon, 250);
+  </script>
+
+</body>
+</html>
